@@ -9,22 +9,8 @@ from PIL import Image
 from io import BytesIO
 import pandas as pd
 import random
+import shutil
 from huggingface_hub import login
-
-
-# Set up directories
-os.makedirs("data/raw", exist_ok=True)
-os.makedirs("data/processed", exist_ok=True)
-
-# # Load the model with correct dtype and device settings
-# pipe = StableDiffusionInpaintPipeline.from_pretrained (
-#     "runwayml/stable-diffusion-inpainting", 
-#     torch_dtype=torch.float16,  # Float16 is faster on GPU
-#     force_download=True
-# )
-
-# # Move model to GPU
-# pipe.to("cuda")
 
 def detect_faces(image_path):
     """Detect faces using RetinaFace and return bounding boxes."""
@@ -45,6 +31,10 @@ def inpaint_faces(image_path, face_bboxes):
     
     mask = Image.fromarray(mask)
     inpainted_image = pipe(prompt="A realistic face", image=image, mask_image=mask).images[0]
+    
+    # Resize the inpainted image to match the original aspect ratio
+    inpainted_image = inpainted_image.resize(image.size, Image.Resampling.LANCZOS)
+    
     return inpainted_image
 
 
@@ -69,25 +59,51 @@ def process_image(url, img_id):
         faces = detect_faces(raw_path)
         if faces:
             print(f"Face detected in {img_id}")
-            # inpainted = inpaint_faces(raw_path, faces)
-            # inpainted.save(processed_path)
+            inpainted = inpaint_faces(raw_path, faces)
+            inpainted.save(processed_path)
         else:
             print(f"No faces detected in {img_id}")
-            # image = Image.open(raw_path).convert("RGB")
-            # image.save(processed_path)
+            image = Image.open(raw_path).convert("RGB")
+            image.save(processed_path)
     else:
         print(f"Skipping {img_id} due to download failure.")
 
+def clear_and_recreate_folders():
+    # Paths to the folders
+    raw_folder = "data/raw"
+    processed_folder = "data/processed"
+
+    # Remove the folders if they exist
+    if os.path.exists(raw_folder):
+        shutil.rmtree(raw_folder)
+    if os.path.exists(processed_folder):
+        shutil.rmtree(processed_folder)
+    
+    # Recreate the folders
+    os.makedirs(raw_folder, exist_ok=True)
+    os.makedirs(processed_folder, exist_ok=True)
+
+clear_and_recreate_folders()
+
+# Load the model with correct dtype and device settings
+pipe = StableDiffusionInpaintPipeline.from_pretrained (
+    "runwayml/stable-diffusion-inpainting", 
+    torch_dtype=torch.float16,  # Float16 is faster on GPU
+    force_download=True
+)
+
+# Move model to GPU
+pipe.to("cuda")
 
 # Replace with the path to your Parquet file
 file_path = 'laion_sample.parquet'
 
 # Read the Parquet file
 df = pd.read_parquet("laion_sample.parquet")
-
 image_urls = df["URL"].dropna().tolist()
 sample_size = int(len(image_urls) * 0.001)  # Adjust based on needs
 subset_urls = random.sample(image_urls, min(sample_size, 1000))  # Max 1000 images
 
-for idx, url in enumerate(subset_urls[0:8]):
+# process images (adjust indices to number you want processed)
+for idx, url in enumerate(subset_urls[0:11]):
     process_image(url, f"img_{idx}")

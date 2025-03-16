@@ -1,0 +1,24 @@
+[project]
+name = "face-privacy-diffusion"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Sydney Su",email = "scsu@ucsd.edu"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "torch (>=2.6.0,<3.0.0)",
+    "retina-face (>=0.0.17,<0.0.18)",
+    "pandas (>=2.2.3,<3.0.0)",
+    "transformers (>=4.49.0,<5.0.0)",
+    "tf-keras (>=2.19.0,<3.0.0)",
+    "diffusers (>=0.32.2,<0.33.0)",
+    "opencv-python (>=4.11.0.86,<5.0.0.0)",
+    "accelerate (>=1.5.2,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
