@@ -3,4 +3,4 @@
 - created a virtual environment for dependencies 
 - had to enable long path support in Registry Editor
 - pip install retina-face pandas transformers tf-keras torch diffusers opencv-python accelerate
-- https://huggingface.co/api/models/stable-diffusion-v1-5/stable-diffusion-inpainting
+- https://huggingface.co/api/models/runwayml/stable-diffusion-inpainting
