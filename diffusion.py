@@ -15,8 +15,8 @@ from huggingface_hub import login
 os.makedirs("data/raw", exist_ok=True)
 os.makedirs("data/processed", exist_ok=True)
 
-#os.environ[] # your token here
-#login() # your token here
+os.environ["HUGGINGFACE_HUB_TOKEN"] = "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"
+login(token="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")
 
 # Load the model with correct dtype and device settings
 pipe = StableDiffusionInpaintPipeline.from_pretrained (
