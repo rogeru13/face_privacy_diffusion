@@ -1,5 +1,5 @@
 3/16/2025
-- downloaded a subset of laion-400m file from kaggl (https://www.kaggle.com/datasets/romainbeaumont/laion400m?resource=download&select=part-00000-5b54c5d5-bbcf-484d-a2ce-0d6f73df1a36-c000.snappy.parquet)
+- downloaded a subset of laion-400m file from kaggle (https://www.kaggle.com/datasets/romainbeaumont/laion400m?resource=download&select=part-00000-5b54c5d5-bbcf-484d-a2ce-0d6f73df1a36-c000.snappy.parquet)
 - created a virtual environment for dependencies 
 - had to enable long path support in Registry Editor
 - pip install retina-face pandas transformers tf-keras torch diffusers opencv-python accelerate
