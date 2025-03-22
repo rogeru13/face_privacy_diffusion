@@ -3,3 +3,4 @@ C:UsersvalkyDownloadslaion_jpg.zip filter=lfs diff=lfs merge=lfs -text
 *.zip
  filter=lfs diff=lfs merge=lfs -text
 C:UsersvalkyDownloadslaion_jpg_10k filter=lfs diff=lfs merge=lfs -text
+C:UsersvalkyDownloadslaion_jpg_10k.zip filter=lfs diff=lfs merge=lfs -text
