@@ -5,6 +5,7 @@
 
 
 ## clipstable_diff: face privacy diffusion model
+ - *Though clipstable_diff.ipynb cannot be rendered in GitHub, attempt opening it in Google Colab to view test images and outputs*
  - Originally trained on ~2,000 Celeb-A PNG images + .txt files detailing yaw, pitch, roll and edge-coordinates of the face
  - Used RunwayML as base inpainting mode
  - Finetuning conducted using LoRA Integration & CLIP based reward system, targeting and rewarding "a realistic, detailed human face"
